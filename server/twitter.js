@@ -101,6 +101,12 @@ tweetBot.init = function(io, query) {
     console.log('-Reconnected to twitter-');
     console.log('------------------------');
     stream.on('data', function(tweet) {
+      if (!tweet.user) {
+        tweet.user = {
+          name: null,
+          image: null
+        };
+      }
       var msg = {};
       msg.text = tweet.text;
       msg.id = tweet.id_str;
