@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
+var models = require('./models.js');
 
 // specify which db to use and where it is.
 mongoose.connect('mongodb://localhost/twitterBot');
@@ -12,75 +12,9 @@ db.once('open', function() {
   console.log("we're connected port:3000");
 });
 
-var UserSchema = mongoose.Schema({
-  username: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
-  password: String,
-  twitterId: String,
-  admin: Number,
-});
-
-var ListSchema = mongoose.Schema({
-  name: {
-    type: String,
-    index: {
-      unique: true,
-    },
-  },
-  user: String,
-});
-
-var TargetSchema = mongoose.Schema({
-  handle: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
-  interval: String,
-  list: String,
-});
-
-var MessageSchema = mongoose.Schema({
-  text: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
-  list: String,
-});
-
-var HashTagSchema = mongoose.Schema({
-  text: {
-    type: String,
-    index: {
-      unique: true
-    }
-  },
-  list: String,
-});
-
-
-var Target = mongoose.model('target', TargetSchema);
-var Message = mongoose.model('message', MessageSchema);
-var HashTag = mongoose.model('HashTag', HashTagSchema);
-var User = mongoose.model('User', UserSchema);
-var List = mongoose.model('List', ListSchema);
 
 var helpers = {};
 
-var models = {
-  target: Target,
-  message: Message,
-  hashtag: HashTag,
-  user: User,
-  list: List,
-};
 
 // HANDLES GET REQUESTS TO /API/MODELS
 // Either gets all or a specific instance.
@@ -160,10 +94,4 @@ helpers.handlePut = function(model, payload, callback) {
   });
 };
 
-console.log('db is feeling good');
-module.exports = {
-  Target: Target,
-  Message: Message,
-  HashTag: HashTag,
-  helpers: helpers
-};
+module.exports = helpers;

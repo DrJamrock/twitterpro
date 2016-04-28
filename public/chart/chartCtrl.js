@@ -2,7 +2,7 @@ angular.module('chart.ctrl', [])
 
 .controller('chartCtrl', ['$scope', 'tweetFactory', '$http', '$rootScope', function($scope, tweetFactory, $http, $rootScope) {
   $scope.showChart = false;
-  
+
   $scope.options = {
     responsive: true,
     maintainAspectRatio: true,

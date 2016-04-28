@@ -130,8 +130,8 @@ tweetBot.init = function(io, query) {
       callback(response);
       console.log('TWITTER: get message success', response);
     });
-  }
-  
+  };
+
 
 
 module.exports = tweetBot;

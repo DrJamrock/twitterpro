@@ -15,8 +15,10 @@ angular.module('feed.ctrl', ['tweet.factory'])
   $scope.changeStream = function(query) {
     console.log(query);
     $scope.tracking = query;
-    var queryObj = { 'track': query };
-    $http.post('//localhost:3000/twitterStream', queryObj ).then(function(results) {
+    var queryObj = {
+      'track': query
+    };
+    $http.post('//localhost:3000/twitterStream', queryObj).then(function(results) {
       console.log("success");
       $scope.query = '';
     });
@@ -27,8 +29,8 @@ angular.module('feed.ctrl', ['tweet.factory'])
     $scope.streaming = !$scope.streaming;
     $log.log('streaming?: ', $scope.streaming);
   };
-  $scope.getTweet = function(i){
+  $scope.getTweet = function(i) {
     console.log('clicked: ', $scope.tweets[i]);
-    
+
   };
 }, ]);
