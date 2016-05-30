@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var schedule = require('node-schedule');
-
 // twitter bot 
 var tweetBot = require('./twitter.js');
 
@@ -18,42 +17,8 @@ app.use(express.static(__dirname + './../public'));
 app.use(bodyParser.json());
 
 //subrouters
-// app.use('/api', require('./routers/apiRoutes.js'));
-
-
-///////////////////////////////////
-/////////dbroutes//////////////////
-///////////////////////////////////
-
-// fetch from db
-app.get('/api/models/:model/:key/:value', function(req, res) {
-  var searchObject = {};
-  searchObject[req.params.key] = req.params.value;
-  db.helpers.handleGet(req.params.model, searchObject, function(results) {
-    res.status(200).send(results);
-  });
-});
-// create new model
-app.post('/api/models/:model', function(req, res) {
-  db.helpers.handlePost(req.params.model, req.body, function(results) {
-    res.status(200).send(results);
-  });
-});
-// delete a model
-app.delete('/api/models/:model/:key/:value', function(req, res) {
-  var searchObject = {};
-  searchObject[req.params.key] = req.params.value;
-
-  db.helpers.handleDelete(req.params.model, searchObject, function(results) {
-    res.status(200).send(results);
-  });
-});
-// change a model
-app.put('/api/models/:model', function(req, res) {
-  db.helpers.handlePut(req.params.model, req.body, function(results) {
-    res.status(200).send(results);
-  });
-});
+// app.use('/', require('./routers/test.js'));
+app.use('/api', require('./routers/apiRoutes.js'));
 
 //
 // twitter
@@ -115,7 +80,6 @@ var autoTweet = function() {
             message = randomElement(messages).text + ' #' + randomElement(hashtags).text;
             console.log('cron message________@' + target.handle + '_________');
             console.log('message: ', message);
-            // uncomment to enable tweets
             tweetBot.sendTweetToUser(target.handle, message);
           }.bind(null, targets[i], messages, hashtags));
           console.log(targets[i].interval);
@@ -125,6 +89,7 @@ var autoTweet = function() {
   });
 };
 
+// uncomment to enable tweets
 // autoTweet();
 
 console.log('app listening: ', port);
